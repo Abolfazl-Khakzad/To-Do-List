@@ -5,6 +5,17 @@ import { taskContex } from './taskContex';
 const TaskItems = () => {
     const {taskItems , setTaskItems}=useContext(taskContex); 
     
+
+    const handleToDoTask = (id)=>{
+        const index = taskItems.findIndex(t=>t.id == id);
+        let newTaskItems = [...taskItems];
+        newTaskItems[index].done= !newTaskItems[index].done;
+        setTaskItems(newTaskItems);
+    }
+    const deleteTask = (id)=>{
+        let newTask = taskItems.filter(t=>t.id !=id);
+        setTaskItems(newTask);
+    }
     if(taskItems.length){
         return (
             <>
@@ -19,14 +30,14 @@ const TaskItems = () => {
                             <span>
                                 {
                                     t.done ? (
-                                    <i class="fa-solid fa-x text-warning me-3 pointer"></i>
+                                    <i class="fa-solid fa-x text-warning me-3 pointer" onClick={()=>handleToDoTask(t.id)}></i>
                                     ) : (
-                                    <i class="fa-solid fa-check text-success me-3 pointer"></i>
+                                    <i class="fa-solid fa-check text-success me-3 pointer" onClick={()=>handleToDoTask(t.id)}></i>
                                     )
                                 }
                             
                             
-                            <i class="fa-solid fa-trash text-danger pointer"></i>
+                            <i class="fa-solid fa-trash text-danger pointer" onClick={()=>deleteTask(t.id)}></i>
                             </span>
                           </li>
                         ))
